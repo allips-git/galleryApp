@@ -9,11 +9,11 @@
         </div>
         <ul class="grid grid-cols-2 gap-x-4 ">
             <li class="flex flex-col gap-y-4">
-                <ProductCard :item="item" v-for="(item, index) in slides" :key="index"/>
+                <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in slides" :key="index" @click="navigateTodetail"/>
             </li>
 
             <li class="flex flex-col gap-y-4">
-                <ProductCard :item="item" v-for="(item, index) in slides2" :key="index"/>
+                <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in slides2" :key="index" @click="navigateTodetail"/>
             </li>
         </ul>
     </main>
@@ -21,18 +21,12 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'; // useRouter 임포트
 import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
-
 import ProductCard from '@/components/card/ProductCard.vue';
 
-const isWhished = ref(false);
-
-// 아이콘 토글 함수
-const toggleIcon = () => {
-    isWhished.value = !isWhished.value;
-};
 
 const slides = ref([
     { image: '/src/assets/imgs/test_02.png', alt: 'Slide 1' },
@@ -54,6 +48,13 @@ const slides2 = ref([
     { image: '/src/assets/imgs/test_03.png', alt: 'Slide 2' },
     { image: '/src/assets/imgs/test_02.png', alt: 'Slide 1' },
 ]);
+
+const router = useRouter(); // 라우터 인스턴스 가져오기
+
+// 클릭 시 /keyword로 이동하는 함수
+const navigateTodetail = () => {
+    router.push('/product/detail'); // 경로 이동
+};
 
 </script>
 

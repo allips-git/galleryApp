@@ -9,7 +9,7 @@
             <div class="w-full pl-5">
                 <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
                     <swiper-slide v-for="(item, index) in slides" :key="index" >
-                        <CompanyCard :item="item"  @click="navigateToKeyword"/>
+                        <ProductCard :aspectRatio="true" :item="item"  @click="navigateToKeyword"/>
                     </swiper-slide>
                 </swiper>
             </div>
@@ -23,7 +23,7 @@
             <div class="w-full pl-5">
                 <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
                     <swiper-slide v-for="(item, index) in slides" :key="index" >
-                        <CompanyCard :item="item"  @click="navigateToKeyword"/>
+                        <ProductCard :aspectRatio="true" :item="item"  @click="navigateToKeyword"/>
                     </swiper-slide>
                 </swiper>
             </div>
@@ -35,7 +35,7 @@
 import { ref } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
-import CompanyCard from '@/components/card/CompanyCard.vue';
+import ProductCard from '@/components/card/ProductCard.vue';
 import { useRouter } from 'vue-router'; // useRouter 임포트
 
 const slides = ref([

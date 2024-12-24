@@ -42,7 +42,7 @@
         </div>
     </section>
     </main>
-    <Dialog v-model:visible="sepcPop" modal :style="{ width: '25rem' }">
+    <Dialog v-model:visible="sepcPop" modal :style="{ width: 'calc(100% - 16px)', minWidth:'300px', maxWidth:'400px' }">
         <template #header>
             <div class="inline-flex items-center justify-center gap-2">
                 <span class="text-2xl font-bold whitespace-nowrap ">아르카디아14종</span>

@@ -8,6 +8,7 @@ interface RouteMeta {
     title:string;
   }
 
+import Login from "@/views/LoginPage.vue";
 import Index from "@/views/index.vue";
 import popular from "@/views/popular.vue";
 import whis from "@/views/whis.vue";
@@ -19,6 +20,12 @@ import productDetail from "@/views/product/productDetail.vue";
 
 const routes = [
 
+    {
+        path: "/login",
+        name: "LoginPage",
+        component: Login,
+        meta: { showTopHeader: false, showAppFooter: false } as RouteMeta 
+    },
     {
         path: "/",
         name: "MainPage",

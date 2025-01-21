@@ -26,27 +26,35 @@ import InputText from 'primevue/inputtext';
 import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import ProductCard from '@/components/card/ProductCard.vue';
+import testImg1 from '@/assets/imgs/test_02.png';
+import testImg2 from '@/assets/imgs/test_03.png';
+import testImg3 from '@/assets/imgs/test_04.png';
+import testImg5 from '@/assets/imgs/test_05.png';
+import testImg6 from '@/assets/imgs/test_06.png';
+import testImg10 from '@/assets/imgs/test_10.png';
+import testImg11 from '@/assets/imgs/test_11.png';
+import testImg13 from '@/assets/imgs/test_13.png';
 
 
 const slides = ref([
-    { image: '/src/assets/imgs/test_02.png', alt: 'Slide 1' },
-    { image: '/src/assets/imgs/test_03.png', alt: 'Slide 2' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_05.png', alt: 'Slide 1' },
-    { image: '/src/assets/imgs/test_06.png', alt: 'Slide 2' },
-    { image: '/src/assets/imgs/test_07.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_02.png', alt: 'Slide 1' },
+    { image: testImg1, alt: 'Slide 1' },
+    { image: testImg2, alt: 'Slide 2' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg1, alt: 'Slide 1' },
+    { image: testImg2, alt: 'Slide 2' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg1, alt: 'Slide 1' },
 ]);
 
 const slides2 = ref([
-    { image: '/src/assets/imgs/test_13.png', alt: 'Slide 2' },
-    { image: '/src/assets/imgs/test_11.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_10.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_06.png', alt: 'Slide 2' },
-    { image: '/src/assets/imgs/test_05.png', alt: 'Slide 1' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_03.png', alt: 'Slide 2' },
-    { image: '/src/assets/imgs/test_02.png', alt: 'Slide 1' },
+    { image: testImg13, alt: 'Slide 2' },
+    { image: testImg11, alt: 'Slide 3' },
+    { image: testImg10, alt: 'Slide 3' },
+    { image: testImg6, alt: 'Slide 2' },
+    { image: testImg5, alt: 'Slide 1' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg2, alt: 'Slide 2' },
+    { image: testImg1, alt: 'Slide 1' },
 ]);
 
 const router = useRouter(); // 라우터 인스턴스 가져오기

@@ -54,16 +54,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import 'swiper/swiper-bundle.css';
-import { useRouter } from 'vue-router'; // useRouter 임포트
 import testImg1 from '@/assets/imgs/test_02.png';
 import testImg2 from '@/assets/imgs/test_03.png';
 import testImg3 from '@/assets/imgs/test_04.png';
 import testImg5 from '@/assets/imgs/test_05.png';
 import testImg6 from '@/assets/imgs/test_06.png';
 import testImg7 from '@/assets/imgs/test_07.png';
+import { onMounted, ref } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/swiper-bundle.css';
+import { useRouter } from 'vue-router';
+import { useMainStore } from '@/stores';
+
+const main = useMainStore();
 
 
 const slides = ref([
@@ -91,6 +94,9 @@ const navigateToKeyword = () => {
   router.push('/keyword'); // 경로 이동
 };
 
+onMounted(async () => {
+    await main.getData();
+})
 </script>
 
 <style>

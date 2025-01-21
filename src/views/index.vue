@@ -21,7 +21,12 @@
         <div class="w-full pl-5">
             <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
                 <swiper-slide v-for="(item, index) in slides" :key="index" >
-                    <CompanyCard :item="item"  @click="navigateToKeyword"/>
+                    <div @click="navigateToKeyword">
+                    <img :src="item.image" :alt="item.alt" class="rounded-lg aspect-[3/4]" />
+                    <div class="flex items-center justify-between mt-2">
+                        <p class="text-gray-200">올립스</p>
+                    </div>
+                    </div>
                 </swiper-slide>
             </swiper>
         </div>
@@ -35,7 +40,12 @@
         <div class="w-full pl-5">
             <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
                 <swiper-slide v-for="(item, index) in slides2" :key="index" >
-                    <CompanyCard :item="item"  @click="navigateToKeyword"/>
+                    <div @click="navigateToKeyword">
+                    <img :src="item.image" :alt="item.alt" class="rounded-lg aspect-[3/4]" />
+                    <div class="flex items-center justify-between mt-2">
+                        <p class="text-gray-200">올립스</p>
+                    </div>
+                    </div>
                 </swiper-slide>
             </swiper>
         </div>
@@ -47,26 +57,31 @@
 import { ref } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
-import CompanyCard from '@/components/card/CompanyCard.vue';
 import { useRouter } from 'vue-router'; // useRouter 임포트
+import testImg1 from '@/assets/imgs/test_02.png';
+import testImg2 from '@/assets/imgs/test_03.png';
+import testImg3 from '@/assets/imgs/test_04.png';
+import testImg5 from '@/assets/imgs/test_05.png';
+import testImg6 from '@/assets/imgs/test_06.png';
+import testImg7 from '@/assets/imgs/test_07.png';
 
 
 const slides = ref([
-  { image: '/src/assets/imgs/test_02.png', alt: 'Slide 1' },
-  { image: '/src/assets/imgs/test_03.png', alt: 'Slide 2' },
-  { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-  { image: '/src/assets/imgs/test_02.png', alt: 'Slide 1' },
-  { image: '/src/assets/imgs/test_03.png', alt: 'Slide 2' },
-  { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
+  { image: testImg1, alt: 'Slide 1' },
+  { image: testImg2, alt: 'Slide 2' },
+  { image: testImg3, alt: 'Slide 3' },
+  { image: testImg1, alt: 'Slide 1' },
+  { image: testImg2, alt: 'Slide 2' },
+  { image: testImg3, alt: 'Slide 3' },
 ]);
 
 const slides2 = ref([
-  { image: '/src/assets/imgs/test_05.png', alt: 'Slide 1' },
-  { image: '/src/assets/imgs/test_06.png', alt: 'Slide 2' },
-  { image: '/src/assets/imgs/test_07.png', alt: 'Slide 3' },
-  { image: '/src/assets/imgs/test_05.png', alt: 'Slide 1' },
-  { image: '/src/assets/imgs/test_06.png', alt: 'Slide 2' },
-  { image: '/src/assets/imgs/test_07.png', alt: 'Slide 3' },
+  { image: testImg5, alt: 'Slide 1' },
+  { image: testImg6, alt: 'Slide 2' },
+  { image: testImg7, alt: 'Slide 3' },
+  { image: testImg5, alt: 'Slide 1' },
+  { image: testImg6, alt: 'Slide 2' },
+  { image: testImg7, alt: 'Slide 3' },
 ]);
 
 const router = useRouter(); // 라우터 인스턴스 가져오기

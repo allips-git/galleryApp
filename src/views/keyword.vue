@@ -12,19 +12,22 @@
 import { ref } from 'vue';
 import CompanyCard from '@/components/card/CompanyCard.vue';
 import { useRouter } from 'vue-router'; // useRouter 임포트
+import testImg1 from '@/assets/imgs/test_02.png';
+import testImg2 from '@/assets/imgs/test_03.png';
+import testImg3 from '@/assets/imgs/test_04.png';
 
 const slides = ref([
-    { image: '/src/assets/imgs/test_02.png', alt: 'Slide 1' },
-    { image: '/src/assets/imgs/test_03.png', alt: 'Slide 2' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
-    { image: '/src/assets/imgs/test_04.png', alt: 'Slide 3' },
+    { image: testImg1, alt: 'Slide 1' },
+    { image: testImg2, alt: 'Slide 2' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg3, alt: 'Slide 3' },
+    { image: testImg3, alt: 'Slide 3' },
 ]);
 
 

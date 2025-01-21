@@ -8,7 +8,6 @@ import PrimeVue from 'primevue/config';
 
 import App from './App.vue'
 import router from './router'
-
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext'; 
 import Select from 'primevue/select'; 
@@ -18,6 +17,7 @@ import ToastService from 'primevue/toastservice';
 import Dialog from 'primevue/dialog'; 
 import Tooltip from 'primevue/tooltip';
 import KeyFilter from 'primevue/keyfilter';
+import { setupStore } from '@/stores'
 
 const app = createApp(App)
 
@@ -74,5 +74,6 @@ app.use(PrimeVue, {
     },
 });
 
+setupStore(app);
 app.use(router);
 app.mount('#app');

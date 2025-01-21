@@ -5,6 +5,7 @@ import type { App } from 'vue';
 // import { useDataStore } from './modules/data';
 // import { usePopupStore } from './modules/popup';
 import { useLoginStore } from './modules/login';
+import { usePopupStore } from './modules/popup';
 import { useMainStore } from './modules/main';
 
 const pinia = createPinia();
@@ -17,5 +18,6 @@ export function setupStore(app: App) {
 export {
     pinia,
     useLoginStore,
+    usePopupStore,
     useMainStore
 };

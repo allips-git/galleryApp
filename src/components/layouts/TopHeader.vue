@@ -2,7 +2,7 @@
 <header class="sticky top-0 z-50 flex items-center justify-between flex-none w-full h-16 px-5 bg-white dark:bg-netblack dark:border-zinc-700">
 
 <div class="flex items-center flex-none gap-1">
-    <router-link class="" to="/"><p class="text-2xl font-bold whitespace-nowrap">디자인 윈도우</p></router-link>
+    <router-link class="" to="/"><p class="text-2xl font-bold whitespace-nowrap">{{ login['name'] }}</p></router-link>
 </div>
     
     
@@ -37,6 +37,7 @@ import IconAvatar from '@/components/icons/IconAvatar.vue'
 
 import Button from 'primevue/button';
 import Popover from 'primevue/popover';
+import { useLoginStore } from '@/stores';
 
 const headerState = ref(true); // 불리언 변수, 중요 여부
 
@@ -55,7 +56,7 @@ function handleClick() {
 
 const moSideHeader = ref(false);
 
-// const login = useLoginStore();
+const login = useLoginStore();
 
 // const getLogOut = () => {
 //     login.getLogout();

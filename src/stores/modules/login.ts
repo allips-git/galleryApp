@@ -34,7 +34,6 @@ export const useLoginStore = defineStore('login', {
                 this.userCd         = res.data.userCd;
                 this.name           = res.data.name;
 
-
                 return true;
             }
             catch(e)

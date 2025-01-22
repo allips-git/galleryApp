@@ -16,10 +16,9 @@ import newPost from "@/views/newPost.vue";
 import keyword from "@/views/keyword.vue";
 import product from "@/views/product/product.vue";
 import productDetail from "@/views/product/productDetail.vue";
-
+import { useStateStore } from '@/stores';
 
 const routes = [
-
     {
         path: "/login",
         name: "LoginPage",
@@ -57,7 +56,7 @@ const routes = [
         path: "/keyword",
         name: "keyword",
         component: keyword,
-        meta: { showTopHeader: false, showAppFooter: false, title: "차양" } as RouteMeta 
+        meta: { showTopHeader: false, showAppFooter: false } as RouteMeta 
     },
 
     {
@@ -72,8 +71,7 @@ const routes = [
         name: "productDetail",
         component: productDetail,
         meta: { showTopHeader: false, showAppFooter: false, title: "세븐크리스 7종" } as RouteMeta 
-    },
-    
+    }
 ]
 
 const router = createRouter({
@@ -83,6 +81,19 @@ const router = createRouter({
         // 항상 맨 위로 스크롤
         return { top: 0 };
       },
+});
+
+router.beforeEach((to, from, next) => {
+    const state = useStateStore();
+
+    switch(to.name)
+    {
+        case 'keyword':
+            to.meta.title = state['gkNm'];
+        break;
+    }
+
+    next();
 });
 
 

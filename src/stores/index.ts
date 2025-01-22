@@ -6,7 +6,11 @@ import type { App } from 'vue';
 // import { usePopupStore } from './modules/popup';
 import { useLoginStore } from './modules/login';
 import { usePopupStore } from './modules/popup';
+import { useStateStore } from './modules/state';
 import { useMainStore } from './modules/main';
+import { useKeywordStore } from './modules/keyword';
+import { usePopularStore } from './modules/popular';
+import { useWhisStore } from './modules/whis';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
@@ -19,5 +23,9 @@ export {
     pinia,
     useLoginStore,
     usePopupStore,
-    useMainStore
+    useStateStore,
+    useMainStore,
+    useKeywordStore,
+    usePopularStore,
+    useWhisStore
 };

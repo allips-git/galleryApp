@@ -1,70 +1,42 @@
 <template>
     <main class="pb-8">    
-        <section class="w-full pt-4">
-            <h1 class="px-5 pb-3 text-xl font-bold ">인기 제품</h1>
+        <h1 class="px-5 pb-3 text-xl font-bold ">인기 제품</h1>
+        <section v-for="(item, index) in popular['list']" class="w-full pt-4" :key="index">
             <div class="flex items-center justify-between w-full px-5 mb-2">
-                <p class="text-xl font-medium">커튼</p>
+                <p class="text-xl font-medium">{{ item['gkNm'] }}</p>
                 <span class="">모두 보기 ></span>
             </div>
             <div class="w-full pl-5">
                 <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
-                    <swiper-slide v-for="(item, index) in slides" :key="index" >
-                        <ProductCard :aspectRatio="true" :item="item"  @click="navigateToKeyword"/>
-                    </swiper-slide>
-                </swiper>
-            </div>
-        </section>
-    
-        <section class="w-full mt-8">
-            <div class="flex items-center justify-between w-full px-5 mb-2">
-                <p class="text-xl font-medium">추천제품</p>
-                <span class="">모두 보기 ></span>
-            </div>
-            <div class="w-full pl-5">
-                <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
-                    <swiper-slide v-for="(item, index) in slides" :key="index" >
-                        <ProductCard :aspectRatio="true" :item="item"  @click="navigateToKeyword"/>
+                    <swiper-slide v-for="(product, pIndex) in item['list']" :key="pIndex" >
+                        <ProductCard :aspectRatio="true" :item="product"  @click="navigateToKeyword"/>
                     </swiper-slide>
                 </swiper>
             </div>
         </section>
     </main>
-    </template>
+</template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
 import ProductCard from '@/components/card/ProductCard.vue';
-import { useRouter } from 'vue-router'; // useRouter 임포트
-import testImg1 from '@/assets/imgs/test_02.png';
-import testImg2 from '@/assets/imgs/test_03.png';
-import testImg3 from '@/assets/imgs/test_04.png';
-import testImg5 from '@/assets/imgs/test_05.png';
-import testImg6 from '@/assets/imgs/test_06.png';
-import testImg7 from '@/assets/imgs/test_07.png';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStateStore, usePopularStore } from '@/stores';
 
-const slides = ref([
-    { image: testImg1, alt: 'Slide 1' },
-    { image: testImg2, alt: 'Slide 2' },
-    { image: testImg3, alt: 'Slide 3' },
-]);
-
-const slides2 = ref([
-    { image: testImg5, alt: 'Slide 1' },
-    { image: testImg6, alt: 'Slide 2' },
-    { image: testImg7, alt: 'Slide 3' },
-]);
-
-
-const router = useRouter(); // 라우터 인스턴스 가져오기
+const router    = useRouter();
+const state     = useStateStore();
+const popular   = usePopularStore();
 
 // 클릭 시 /keyword로 이동하는 함수
 const navigateToKeyword = () => {
   router.push('/keyword'); // 경로 이동
 };
 
-
+onMounted(() => {
+    popular.getData();
+})
 </script>
 
 <style>

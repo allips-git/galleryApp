@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { getAxiosData } from '@/assets/js/function';
-import { useLoginStore } from '@/stores';
+import { useStateStore, useLoginStore } from '@/stores';
 
 interface ProductList {
     faCd        : string;
@@ -19,7 +19,7 @@ interface State {
     list    : List[];
 }
 
-export const useMainStore = defineStore('main', {
+export const useKeywordStore = defineStore('keyword', {
     state: (): State => ({
         search  : '',
         list    : []
@@ -27,8 +27,10 @@ export const useMainStore = defineStore('main', {
     actions: {
         async getData()
         {
+            const stateStore    = useStateStore();
             const loginStore    = useLoginStore();
             const params        = {
+                gkCd    : stateStore['gkGb'],
                 code    : loginStore['code'],
                 search  : this.search
             };
@@ -38,24 +40,24 @@ export const useMainStore = defineStore('main', {
             try
             {
                 const instance  = await getAxiosData();
-                const res       = await instance.post(`https://gallery-data.plansys.kr/keyword/getMain`, params);
+                const res       = await instance.post(`https://gallery-data.plansys.kr/keyword/getAllFileList`, params);
 
                 const list      = [];
                 console.log(res);
 
-                res.data.map(item => {
-                    list.push({
-                        gkGb        : item.gkGb,
-                        gkNm        : item.gkNm,
-                        productList : item.productList.map(product => {
-                            return {
-                                faCd        : product.faCd,
-                                faNm        : product.faNm,
-                                filePath    : product.filePath
-                            }
-                        })
-                    });
-                });
+                // res.data.map(item => {
+                //     list.push({
+                //         gkGb        : item.gkGb,
+                //         gkNm        : item.gkNm,
+                //         productList : item.productList.map(product => {
+                //             return {
+                //                 faCd        : product.faCd,
+                //                 faNm        : product.faNm,
+                //                 filePath    : product.filePath
+                //             }
+                //         })
+                //     });
+                // });
 
                 this.list = list;
             }

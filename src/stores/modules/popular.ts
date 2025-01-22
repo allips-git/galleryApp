@@ -3,15 +3,15 @@ import { getAxiosData } from '@/assets/js/function';
 import { useLoginStore } from '@/stores';
 
 interface ProductList {
-    faCd        : string;
-    faNm        : string;
+    itemCd      : string;
+    itemNm      : string;
     filePath    : string;
 }
 
 interface List {
-    gkGb        : string;
-    gkNm        : string;
-    productList : ProductList[];
+    gkCd    : string;
+    gkNm    : string;
+    list    : ProductList[];
 }
 
 interface State {
@@ -19,7 +19,7 @@ interface State {
     list    : List[];
 }
 
-export const useMainStore = defineStore('main', {
+export const usePopularStore = defineStore('popular', {
     state: (): State => ({
         search  : '',
         list    : []
@@ -38,23 +38,26 @@ export const useMainStore = defineStore('main', {
             try
             {
                 const instance  = await getAxiosData();
-                const res       = await instance.post(`https://gallery-data.plansys.kr/keyword/getMain`, params);
+                const res       = await instance.post(`https://gallery-data.plansys.kr/keyword/getPopularList`, params);
 
                 const list      = [];
                 console.log(res);
 
                 res.data.map(item => {
-                    list.push({
-                        gkGb        : item.gkGb,
-                        gkNm        : item.gkNm,
-                        productList : item.productList.map(product => {
-                            return {
-                                faCd        : product.faCd,
-                                faNm        : product.faNm,
-                                filePath    : product.filePath
-                            }
-                        })
-                    });
+                    if(item.list)
+                    {
+                        list.push({
+                            gkCd    : item.gkCd,
+                            gkNm    : item.gkNm,
+                            list    : item.list ? item.list.map(product => {
+                                return {
+                                    itemCd      : product.itemCd,
+                                    itemNm      : product.itemNm,
+                                    filePath    : product.filePath
+                                }
+                            }) : []
+                        });
+                    }
                 });
 
                 this.list = list;

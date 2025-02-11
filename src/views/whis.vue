@@ -3,11 +3,11 @@
         <h1 class="pb-3 text-xl font-bold ">니의 찜</h1>
         <ul class="grid grid-cols-2 gap-x-4 ">
             <li class="flex flex-col gap-y-4">
-                <ProductCard :aspectRatio="false" :item="whis['list1']" v-for="(item, index) in slides" :key="index"/>
+                <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in whis['list1']" @get-whis="getWhis" :key="index" @click="getMove"/>
             </li>
 
             <li class="flex flex-col gap-y-4">
-                <ProductCard :aspectRatio="false" :item="whis['list2']" v-for="(item, index) in slides2" :key="index"/>
+                <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in whis['list2']" @get-whis="getWhis" :key="index" @click="getMove"/>
             </li>
         </ul>
 </main>
@@ -15,15 +15,30 @@
 
 <script setup lang="ts">
 import ProductCard from '@/components/card/ProductCard.vue';
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router'; // useRouter 임포트
-import { useWhisStore } from '@/stores';
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useProductStore, useWhisStore } from '@/stores';
 
 const router    = useRouter();
 const whis      = useWhisStore();
+const product   = useProductStore();
 
-onMounted(() => {
-    whis.getList();
+const getWhis = async (itemCd: string) => {
+    await product.getWhis(itemCd).then( async (result) => {
+        if(result)
+        {
+            await getList();
+        }
+    });
+}
+
+const getList = async () => {
+    await whis.getListReset();
+    await whis.getList();
+}
+
+onMounted(async() => {
+    await getList();
 })
 </script>
 

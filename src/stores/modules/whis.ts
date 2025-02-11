@@ -5,20 +5,27 @@ import { useLoginStore } from '@/stores';
 interface List {
     itemCd      : string;
     itemNm      : string;
+    likeYn      : Y | N;
     filePath    : string;
 }
 
 interface State {
-    search  : string;
     list1   : List[];
     list2   : List[];
+    more    : boolean;
+    start   : number;
+    limit   : number;
 }
+
+const fileUrl = 'https://elasticbeanstalk-ap-northeast-2-627549176645.s3.ap-northeast-2.amazonaws.com/';
 
 export const useWhisStore = defineStore('whis', {
     state: (): State => ({
-        search  : '',
         list1   : [],
-        list2   : []
+        list2   : [],
+        more    : true,
+        start   : 0,
+        limit   : 20
     }),
     actions: {
         async getList()
@@ -26,7 +33,8 @@ export const useWhisStore = defineStore('whis', {
             const loginStore    = useLoginStore();
             const params        = {
                 code    : loginStore['code'],
-                search  : this.search
+                start   : this.start,
+                limit   : this.limit
             };
 
             console.log(params);
@@ -38,16 +46,17 @@ export const useWhisStore = defineStore('whis', {
 
                 console.log(res);
 
-                const list1 = [];
-                const list2 = [];
+                const list1     = [];
+                const list2     = [];
 
                 res.data.map((item, index) => {
                     const list = {
                         itemCd      : item.itemCd,
                         itemNm      : item.itemNm,
-                        filePath    : item.filePath
+                        likeYn      : item.likeYn,
+                        filePath    : fileUrl + item.filePath
                     };
-                    
+
                     if(index % 2 === 0)
                     {
                         list1.push(list);
@@ -58,13 +67,26 @@ export const useWhisStore = defineStore('whis', {
                     }
                 });
 
-                this.list1 = list1;
-                this.list2 = list2;
+                this.list1  = [...this.list1, ...list1];
+                this.list2  = [...this.list2, ...list2];
+
+                this.start = this.start + 20;
+
+                if(res.data.length === 0)
+                {
+                    this.more = false;
+                }
             }
             catch(e)
             {
                 console.log(e);
             }
+        },
+        getListReset()
+        {
+            this.list1 = [];
+            this.list2 = [];
+            this.start = 0;
         }
     }
 });

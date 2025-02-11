@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia';
 
 interface State {
+    code    : string;
+    codeNm  : string;
+    itemGb  : string;
+    itemGbNm: string;
     gkGb    : string;
     gkNm    : string;
     faCd    : string;
@@ -11,6 +15,10 @@ interface State {
 
 export const useStateStore = defineStore('state', {
     state: (): State => ({
+        code    : '',
+        codeNm  : '',
+        itemGb  : 'B',
+        itemGbNm: '',
         gkGb    : '',
         gkNm    : '',
         faCd    : '',
@@ -19,6 +27,22 @@ export const useStateStore = defineStore('state', {
         itemNm  : ''
     }),
     actions: {
+        setCode(code: string)
+        {
+            this.code = code;
+        },
+        setCodeNm(codeNm: string)
+        {
+            this.codeNm = codeNm
+        },
+        setItemGb(itemGb: string)
+        {
+            this.itemGb = itemGb
+        },
+        setItemGbNm(itemGbNm: string)
+        {
+            this.itemGbNm = itemGbNm;
+        },
         setGkGb(gkGb: string)
         {
             this.gkGb = gkGb;

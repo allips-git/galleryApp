@@ -3,7 +3,7 @@
         <h1 class="px-5 pb-3 text-xl font-bold ">인기 제품</h1>
         <section v-for="(item, index) in popular['list']" class="w-full pt-4" :key="index">
             <div class="flex items-center justify-between w-full px-5 mb-2">
-                <p class="text-xl font-medium">{{ item['gkNm'] }}</p>
+                <p class="text-xl font-medium">{{ item['itemGbNm'] }}</p>
                 <span class="">모두 보기 ></span>
             </div>
             <div class="w-full pl-5">

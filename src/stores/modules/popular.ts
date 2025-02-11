@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getAxiosData } from '@/assets/js/function';
+import { getAxiosData, getTokenOut } from '@/assets/js/function';
 import { useLoginStore } from '@/stores';
 
 interface ProductList {
@@ -9,19 +9,19 @@ interface ProductList {
 }
 
 interface List {
-    gkCd    : string;
-    gkNm    : string;
-    list    : ProductList[];
+    itemGb      : string;
+    itemGbNm    : string;
+    list        : ProductList[];
 }
 
 interface State {
-    search  : string;
     list    : List[];
 }
 
+const fileUrl = 'https://elasticbeanstalk-ap-northeast-2-627549176645.s3.ap-northeast-2.amazonaws.com/';
+
 export const usePopularStore = defineStore('popular', {
     state: (): State => ({
-        search  : '',
         list    : []
     }),
     actions: {
@@ -29,8 +29,7 @@ export const usePopularStore = defineStore('popular', {
         {
             const loginStore    = useLoginStore();
             const params        = {
-                code    : loginStore['code'],
-                search  : this.search
+                code    : loginStore['code']
             };
 
             console.log(params);
@@ -47,13 +46,13 @@ export const usePopularStore = defineStore('popular', {
                     if(item.list)
                     {
                         list.push({
-                            gkCd    : item.gkCd,
-                            gkNm    : item.gkNm,
-                            list    : item.list ? item.list.map(product => {
+                            itemGb      : item.itemGb,
+                            itemGbNm    : item.itemGbNm,
+                            list        : item.list ? item.list.map(product => {
                                 return {
                                     itemCd      : product.itemCd,
                                     itemNm      : product.itemNm,
-                                    filePath    : product.filePath
+                                    filePath    : fileUrl+product.filePath
                                 }
                             }) : []
                         });
@@ -65,6 +64,14 @@ export const usePopularStore = defineStore('popular', {
             catch(e)
             {
                 console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    alert('제품 정보 조회 중 오류가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
             }
         }
     }

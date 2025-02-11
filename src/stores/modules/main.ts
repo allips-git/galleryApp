@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getAxiosData } from '@/assets/js/function';
+import { getAxiosData, getTokenOut } from '@/assets/js/function';
 import { useLoginStore } from '@/stores';
 
 interface ProductList {
@@ -15,13 +15,13 @@ interface List {
 }
 
 interface State {
-    search  : string;
     list    : List[];
 }
 
+const fileUrl = 'https://elasticbeanstalk-ap-northeast-2-627549176645.s3.ap-northeast-2.amazonaws.com/';
+
 export const useMainStore = defineStore('main', {
     state: (): State => ({
-        search  : '',
         list    : []
     }),
     actions: {
@@ -29,8 +29,7 @@ export const useMainStore = defineStore('main', {
         {
             const loginStore    = useLoginStore();
             const params        = {
-                code    : loginStore['code'],
-                search  : this.search
+                code    : loginStore['code']
             };
 
             console.log(params);
@@ -51,7 +50,7 @@ export const useMainStore = defineStore('main', {
                             return {
                                 faCd        : product.faCd,
                                 faNm        : product.faNm,
-                                filePath    : product.filePath
+                                filePath    : fileUrl + product.filePath
                             }
                         })
                     });
@@ -62,6 +61,14 @@ export const useMainStore = defineStore('main', {
             catch(e)
             {
                 console.log(e);
+                if(e.response.status === 401)
+                {
+                    getTokenOut();
+                }
+                else
+                {
+                    alert('제품 정보 조회 중 오류가 발생하였습니다. 지속될 경우 관리자에게 문의하세요.');
+                }
             }
         }
     }

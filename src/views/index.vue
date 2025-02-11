@@ -31,7 +31,7 @@
         </div>
     </section>
 
-    <section class="w-full mt-8">
+    <!-- <section class="w-full mt-8">
         <div class="flex items-center justify-between w-full px-5 mb-2">
             <p class="text-xl font-medium">추천제품</p>
             <span class="">모두 보기 ></span>
@@ -48,15 +48,12 @@
                 </swiper-slide>
             </swiper>
         </div>
-    </section>
+    </section> -->
 </main>
 </template>
 
 <script setup lang="ts">
-import testImg5 from '@/assets/imgs/test_05.png';
-import testImg6 from '@/assets/imgs/test_06.png';
-import testImg7 from '@/assets/imgs/test_07.png';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
 import { useRouter } from 'vue-router';
@@ -67,23 +64,13 @@ const state     = useStateStore();
 const main      = useMainStore();
 
 const getMove = async (gkGb: string, gkNm: string) => {
-    await state.setGkGb(gkGb);
-    await state.setGkNm(gkNm);
-    router.push({  path: '/keyword' });
+    await state.setItemGb(gkGb);
+    await state.setItemGbNm(gkNm);
+    router.push({ path: '/keyword' });
 }
 
-const slides2 = ref([
-  { image: testImg5, alt: 'Slide 1' },
-  { image: testImg6, alt: 'Slide 2' },
-  { image: testImg7, alt: 'Slide 3' },
-  { image: testImg5, alt: 'Slide 1' },
-  { image: testImg6, alt: 'Slide 2' },
-  { image: testImg7, alt: 'Slide 3' },
-]);
-
-// 클릭 시 /keyword로 이동하는 함수
 const navigateToKeyword = () => {
-  router.push('/keyword'); // 경로 이동
+    router.push('/keyword'); // 경로 이동
 };
 
 onMounted(async () => {

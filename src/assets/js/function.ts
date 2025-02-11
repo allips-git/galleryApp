@@ -1,4 +1,5 @@
 import { useLoginStore } from '@/stores';
+import router from '@/router';
 import axios from 'axios';
 
 /**
@@ -20,3 +21,11 @@ export const getAxiosData = async () => {
 
     return instance;
 };
+
+export const getTokenOut = () => {
+    const loginStore = useLoginStore();
+
+    alert('세션이 만료되었습니다. 로그인 페이지로 이동합니다.');
+    loginStore.getLogout();
+    router.push('/login');
+}

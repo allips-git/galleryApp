@@ -7,6 +7,7 @@ interface State {
     itemGbNm: string;
     gkGb    : string;
     gkNm    : string;
+    gkCd    : string;
     faCd    : string;
     faNm    : string;
     itemCd  : string;
@@ -17,10 +18,11 @@ export const useStateStore = defineStore('state', {
     state: (): State => ({
         code    : '',
         codeNm  : '',
-        itemGb  : 'B',
+        itemGb  : '',
         itemGbNm: '',
         gkGb    : '',
         gkNm    : '',
+        gkCd    : '',
         faCd    : '',
         faNm    : '',
         itemCd  : '',
@@ -49,7 +51,12 @@ export const useStateStore = defineStore('state', {
         },
         setGkNm(gkNm: string)
         {
+            console.log(gkNm);
             this.gkNm = gkNm;
+        },
+        setGkCd(gkCd: string)
+        {
+            this.gkCd = gkCd;
         },
         setFaCd(faCd: string)
         {

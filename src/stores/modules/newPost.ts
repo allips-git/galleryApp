@@ -20,7 +20,7 @@ interface State {
 
 const fileUrl = 'https://elasticbeanstalk-ap-northeast-2-627549176645.s3.ap-northeast-2.amazonaws.com/';
 
-export const useWhisStore = defineStore('whis', {
+export const useNewPostStore = defineStore('newPost', {
     state: (): State => ({
         list1   : [],
         list2   : [],
@@ -43,7 +43,7 @@ export const useWhisStore = defineStore('whis', {
             try
             {
                 const instance  = await getAxiosData();
-                const res       = await instance.post(`https://gallery-data.plansys.kr/keyword/getLikeList`, params);
+                const res       = await instance.post(`https://gallery-data.plansys.kr/keyword/getNewItemList`, params);
 
                 console.log(res);
 

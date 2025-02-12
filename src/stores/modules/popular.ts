@@ -3,8 +3,10 @@ import { getAxiosData, getTokenOut } from '@/assets/js/function';
 import { useLoginStore } from '@/stores';
 
 interface ProductList {
+    gkCd        : string;
     itemCd      : string;
     itemNm      : string;
+    likeYn      : Y | N;
     filePath    : string;
 }
 
@@ -50,8 +52,10 @@ export const usePopularStore = defineStore('popular', {
                             itemGbNm    : item.itemGbNm,
                             list        : item.list ? item.list.map(product => {
                                 return {
+                                    gkCd        : product.gkCd,
                                     itemCd      : product.itemCd,
                                     itemNm      : product.itemNm,
+                                    likeYn      : product.likeYn,
                                     filePath    : fileUrl+product.filePath
                                 }
                             }) : []

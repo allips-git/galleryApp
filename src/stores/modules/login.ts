@@ -44,7 +44,12 @@ export const useLoginStore = defineStore('login', {
         },
         async getLogout()
         {
-            
+            this.accessToekn    = null;
+            this.refreshToken   = null;
+            this.type           = null;
+            this.code           = null;
+            this.userCd         = null;
+            this.name           = '';
         },
         getToken(token: string)
         {

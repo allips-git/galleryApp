@@ -15,9 +15,9 @@
         <button class="flex items-center justify-center size-8" @click="toggleNotificationPopover($event)">
             <IconAvatar class="*:text-blue-200 !size-10 "/>
         </button>
-        <Popover class="" ref="notificationPopover" dismissable> 
+        <Popover class="" ref="notificationPopover" dismissable>
             <div class="flex flex-col">
-                <Button :label="t('btn.logout')" icon="pi pi-sign-out" severity="danger" text  size="small" @click="getLogOut"/>
+                <Button label="로그아웃" icon="pi pi-sign-out" severity="danger" text  size="small" @click="getLogOut"/>
             </div>
         </Popover>
 
@@ -30,37 +30,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, defineEmits,onMounted } from 'vue';
 import IconAvatar from '@/components/icons/IconAvatar.vue'
-
-// import { changeLanguage } from '@/locales/i18n'; // named import로 수정
-
 import Button from 'primevue/button';
 import Popover from 'primevue/popover';
+import { useRouter } from 'vue-router';
+import { ref, nextTick } from 'vue';
 import { useLoginStore } from '@/stores';
 
-const headerState = ref(true); // 불리언 변수, 중요 여부
+const router    = useRouter();
+const login     = useLoginStore();
 
-
-const headMenu = ref([]); // 메뉴 항목을 정의합니다.
-const hoveredIndex = ref(-1); // 현재 hover된 인덱스를 저장합니다.
-
-
-const emit = defineEmits<{
-  (e: 'toggleHeader'): void;
-}>();
-
-function handleClick() {
-  emit('toggleHeader'); // 부모에 toggleHeader 이벤트를 발생시킴
+const getLogOut = () => {
+    alert('로그아웃 되었습니다.');
+    login.getLogout();
+    router.push('/login');
 }
-
-const moSideHeader = ref(false);
-
-const login = useLoginStore();
-
-// const getLogOut = () => {
-//     login.getLogout();
-// }
 
 const toggleDarkMode = () => {
     const element = document.querySelector('html');
@@ -78,7 +62,6 @@ const toggleDarkMode = () => {
     }
 };
 
-
 const notificationPopover = ref<InstanceType<typeof Popover> | null>(null);
 
 // notificationPopover 토글 함수 정의
@@ -89,17 +72,7 @@ const toggleNotificationPopover = async (event: MouseEvent) => {
     }
 };
 
-const AlarmPopover = ref<InstanceType<typeof Popover> | null>(null);
-
-const toggleAlarmPopover = async (event: MouseEvent) => {
-    await nextTick();
-    if (AlarmPopover.value) {
-        AlarmPopover.value.toggle(event);
-    }
-};
-
 const isDarkMode = ref(false); 
-const menu = ref();
 const items = ref([
     {
         label: isDarkMode.value ? '라이트 모드로 변경' : '다크 모드로 변경',

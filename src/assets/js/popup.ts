@@ -1,4 +1,4 @@
-import { usePopupStore } from '@/store/modules/popup';
+import { usePopupStore } from '@/stores/modules/popup';
 
 export const usePopup = () => {
     const popup  = usePopupStore();

@@ -9,11 +9,13 @@
         </div>
         <ul class="grid grid-cols-2 gap-x-4 ">
             <li class="flex flex-col gap-y-4">
-                <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in product['list1']" @get-whis="getWhis" :key="index" @click="getMove"/>
+                <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in product['list1']" @get-whis="getWhis" :key="index" 
+                    @click="getMove(item['gkCd'], item['itemCd'])"/>
             </li>
 
             <li class="flex flex-col gap-y-4">
-                <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in product['list2']" @get-whis="getWhis" :key="index" @click="getMove"/>
+                <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in product['list2']" @get-whis="getWhis" :key="index" 
+                    @click="getMove(item['gkCd'], item['itemCd'])"/>
             </li>
         </ul>
     </main>
@@ -26,13 +28,16 @@ import InputIcon from 'primevue/inputicon';
 import ProductCard from '@/components/card/ProductCard.vue';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useDataStore, useProductStore } from '@/stores';
+import { useDataStore, useStateStore, useProductStore } from '@/stores';
 
 const data      = useDataStore();
+const state     = useStateStore();
 const product   = useProductStore();
 const router    = useRouter();
 
-const getMove = () => {
+const getMove = async (gkCd: string, itemCd: string) => {
+    await state.setGkCd(gkCd);
+    await state.setItemCd(itemCd);
     router.push('/product/detail');
 };
 

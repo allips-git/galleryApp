@@ -17,11 +17,18 @@
 import ProductCard from '@/components/card/ProductCard.vue';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProductStore, useWhisStore } from '@/stores';
+import { useStateStore, useProductStore, useWhisStore } from '@/stores';
 
 const router    = useRouter();
+const state     = useStateStore();
 const whis      = useWhisStore();
 const product   = useProductStore();
+
+const getMove = async (gkCd: string, itemCd: string) => {
+    await state.setGkCd(gkCd);
+    await state.setItemCd(itemCd);
+    router.push('/product/detail');
+};
 
 const getWhis = async (itemCd: string) => {
     await product.getWhis(itemCd).then( async (result) => {

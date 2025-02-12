@@ -20,7 +20,7 @@
         <div class="w-full pl-5">
             <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
                 <swiper-slide v-for="(product, pIndex) in item['productList']" :key="pIndex" >
-                    <div @click="navigateToKeyword">
+                    <div @click="getProduct(product['faCd'], product['faNm'])">
                         <img :src="product.filePath" class="rounded-lg aspect-[3/4]" />
                         <div class="flex items-center justify-between mt-2">
                             <p class="text-gray-200">{{ product['faNm'] }}</p>
@@ -69,8 +69,10 @@ const getMove = async (gkGb: string, gkNm: string) => {
     router.push({ path: '/keyword' });
 }
 
-const navigateToKeyword = () => {
-    router.push('/keyword'); // 경로 이동
+const getProduct = async (code: string, codeNm: string) => {
+    await state.setCode(code);
+    await state.setCodeNm(codeNm);
+    router.push('/product');
 };
 
 onMounted(async () => {

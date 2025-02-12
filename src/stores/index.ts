@@ -11,6 +11,7 @@ import { useMainStore } from './modules/main';
 import { useKeywordStore } from './modules/keyword';
 import { usePopularStore } from './modules/popular';
 import { useWhisStore } from './modules/whis';
+import { useNewPostStore } from './modules/newPost';
 import { useProductStore } from './modules/product';
 
 const pinia = createPinia();
@@ -30,5 +31,6 @@ export {
     useKeywordStore,
     usePopularStore,
     useWhisStore,
+    useNewPostStore,
     useProductStore
 };

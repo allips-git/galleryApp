@@ -9,7 +9,8 @@
             <div class="w-full pl-5">
                 <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
                     <swiper-slide v-for="(product, pIndex) in item['list']" :key="pIndex" >
-                        <ProductCard :aspectRatio="false" :item="product" @get-whis="getWhis" @click="getMove"/>
+                        <ProductCard :aspectRatio="false" :item="product" @get-whis="getWhis"
+                            @click="getMove(product['gkCd'], product['itemCd'])"/>
                     </swiper-slide>
                 </swiper>
             </div>
@@ -23,13 +24,16 @@ import 'swiper/swiper-bundle.css';
 import ProductCard from '@/components/card/ProductCard.vue';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useProductStore, usePopularStore } from '@/stores';
+import { useStateStore, useProductStore, usePopularStore } from '@/stores';
 
 const router    = useRouter();
+const state     = useStateStore();
 const popular   = usePopularStore();
 const product   = useProductStore();
 
-const getMove = () => {
+const getMove = async (gkCd: string, itemCd: string) => {
+    await state.setGkCd(gkCd);
+    await state.setItemCd(itemCd);
     router.push('/product/detail');
 };
 

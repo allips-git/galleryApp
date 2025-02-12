@@ -9,7 +9,7 @@
             <div class="w-full pl-5">
                 <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
                     <swiper-slide v-for="(product, pIndex) in item['list']" :key="pIndex" >
-                        <ProductCard :aspectRatio="true" :item="product"  @click="navigateToKeyword"/>
+                        <ProductCard :aspectRatio="false" :item="product" @get-whis="getWhis" @click="getMove"/>
                     </swiper-slide>
                 </swiper>
             </div>
@@ -21,18 +21,26 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
 import ProductCard from '@/components/card/ProductCard.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStateStore, usePopularStore } from '@/stores';
+import { useProductStore, usePopularStore } from '@/stores';
 
 const router    = useRouter();
-const state     = useStateStore();
 const popular   = usePopularStore();
+const product   = useProductStore();
 
-// 클릭 시 /keyword로 이동하는 함수
-const navigateToKeyword = () => {
-  router.push('/keyword'); // 경로 이동
+const getMove = () => {
+    router.push('/product/detail');
 };
+
+const getWhis = async (itemCd: string) => {
+    await product.getWhis(itemCd).then( async (result) => {
+        if(result)
+        {
+            await popular.getData();
+        }
+    });
+}
 
 onMounted(() => {
     popular.getData();

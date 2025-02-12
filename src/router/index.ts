@@ -6,7 +6,7 @@ interface RouteMeta {
     showAppFooter?: boolean;
     showBackHeader?: boolean
     title:string;
-  }
+}
 
 import Login from "@/views/LoginPage.vue";
 import Index from "@/views/index.vue";
@@ -16,7 +16,7 @@ import newPost from "@/views/newPost.vue";
 import keyword from "@/views/keyword.vue";
 import product from "@/views/product/product.vue";
 import productDetail from "@/views/product/productDetail.vue";
-import { useStateStore } from '@/stores';
+import { useStateStore, useProductStore } from '@/stores';
 
 const routes = [
     {
@@ -77,19 +77,24 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes,
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior() 
+    {
         // 항상 맨 위로 스크롤
         return { top: 0 };
-      },
+    }
 });
 
 router.beforeEach((to, from, next) => {
-    const state = useStateStore();
+    const state     = useStateStore();
+    const product   = useProductStore();
 
     switch(to.name)
     {
         case 'keyword':
-            to.meta.title = state['gkNm'];
+            to.meta.title = state['itemGbNm'];
+        break;
+        case 'productDetail':
+            to.meta.title = product['info']['itemNm'];
         break;
     }
 

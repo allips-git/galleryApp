@@ -3,15 +3,28 @@ import { getAxiosData, getTokenOut } from '@/assets/js/function';
 import { useLoginStore, useStateStore } from '@/stores';
 
 interface List {
+    gkCd        : string;
     itemCd      : string;
     itemNm      : string;
     likeYn      : Y | N;
     filePath    : string;
 }
+
+interface IcList {
+    icNm : string;
+    img  : string;
+}
+
 interface Info {
-    code    : string;
-    itemNm  : string;
-    /** 암막율 / 기타부속 / 원재료 국가 / 제품특성 */
+    itemNm      : string;
+    colorCnt    : number;
+    texture     : string;
+    rate        : number;
+    etc         : string;
+    origin      : string;
+    prodChar    : string;
+    repImg      : string;
+    icList      : IcList[];
 }
 
 interface State {
@@ -27,8 +40,15 @@ interface State {
 
 const getInfo = (): Info => {
     return {
-        code    : '',
-        itemNm  : ''
+        itemNm      : '',
+        colorCnt    : 0,
+        texture     : '',
+        rate        : 0,
+        etc         : '',
+        origin      : '',
+        prodChar    : '',
+        repImg      : '',
+        icList      : []
     }
 }
 
@@ -73,6 +93,7 @@ export const useProductStore = defineStore('product', {
 
                 res.data.map((item, index) => {
                     const list = {
+                        gkCd        : item.gkCd,
                         itemCd      : item.itemCd,
                         itemNm      : item.itemNm,
                         likeYn      : item.likeYn,
@@ -106,7 +127,51 @@ export const useProductStore = defineStore('product', {
         },
         async getInfo()
         {
+            const state         = useStateStore();
+            const params        = {
+                gkCd    : state['gkCd'],
+                itemCd  : state['itemCd']
+            };
 
+            console.log(params);
+
+            try
+            {
+                const instance  = await getAxiosData();
+                const res       = await instance.post(`https://gallery-data.plansys.kr/keyword/getInfo`, params);
+
+                const files     = [];
+
+                const info = {
+                    itemNm      : res.data['itemNm'] + res.data['list'].length + '종',
+                    colorCnt    : res.data['list'].length,
+                    texture     : res.data['texture'],
+                    rate        : res.data['rate'],
+                    etc         : res.data['etc'],
+                    origin      : res.data['origin'],
+                    prodChar    : res.data['prodChar'],
+                    repImg      : fileUrl + res.data['repFile']['filePath']
+                }
+
+                res.data['list'].map(item => {
+                    item.files.map(file => {
+                        files.push({
+                            icNm : item.icNm,
+                            file : fileUrl + file.filePath
+                        })
+                    })
+                });
+
+                info['files'] = files;
+
+                this.info = info;
+
+                console.log(this.info);
+            }
+            catch(e)
+            {
+                console.log(e);
+            }
         },
         async getWhis(itemCd: string)
         {

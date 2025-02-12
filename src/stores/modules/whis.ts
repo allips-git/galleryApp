@@ -3,6 +3,7 @@ import { getAxiosData } from '@/assets/js/function';
 import { useLoginStore } from '@/stores';
 
 interface List {
+    gkCd        : string;
     itemCd      : string;
     itemNm      : string;
     likeYn      : Y | N;
@@ -51,6 +52,7 @@ export const useWhisStore = defineStore('whis', {
 
                 res.data.map((item, index) => {
                     const list = {
+                        gkCd        : item.gkCd,
                         itemCd      : item.itemCd,
                         itemNm      : item.itemNm,
                         likeYn      : item.likeYn,

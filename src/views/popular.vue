@@ -4,13 +4,13 @@
         <section v-for="(item, index) in popular['list']" class="w-full pt-4" :key="index">
             <div class="flex items-center justify-between w-full px-5 mb-2">
                 <p class="text-xl font-medium">{{ item['itemGbNm'] }}</p>
-                <span class="">모두 보기 ></span>
+                <span class="" @click="getProduct(item['itemGb'])">모두 보기 ></span>
             </div>
             <div class="w-full pl-5">
                 <swiper :slidesPerView="2.1" :spaceBetween="8" pagination >
                     <swiper-slide v-for="(product, pIndex) in item['list']" :key="pIndex" >
                         <ProductCard :aspectRatio="false" :item="product" @get-whis="getWhis"
-                            @click="getMove(product['gkCd'], product['itemCd'])"/>
+                            @click="getMove(product['gkCd'], product['itemCd'], product['itemNm'])"/>
                     </swiper-slide>
                 </swiper>
             </div>
@@ -31,9 +31,15 @@ const state     = useStateStore();
 const popular   = usePopularStore();
 const product   = useProductStore();
 
-const getMove = async (gkCd: string, itemCd: string) => {
+const getProduct = async (itemGb: B | C) => {
+    await state.setItemGb(itemGb);
+    router.push('/product');
+}
+
+const getMove = async (gkCd: string, itemCd: string, itemNm: string) => {
     await state.setGkCd(gkCd);
     await state.setItemCd(itemCd);
+    await state.setItemNm(itemNm);
     router.push('/product/detail');
 };
 

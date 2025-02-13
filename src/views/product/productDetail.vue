@@ -3,14 +3,14 @@
         <section class="w-full">
             <div class="w-full">
                 <swiper :slidesPerView="1" :pagination="{ dynamicBullets: true, }" :modules="modules">
-                    <swiper-slide>
+                    <div>
                         <div class="flex items-center justify-center h-[calc(100vh-260px)]">
                             <img :src="product['info']['repImg']" class="flex items-center justify-center object-cover w-full max-h-full">
                         </div>
                         <div class="absolute right-4 top-4">
                             <Button label="스펙보기" severity="secondary" size="small" @click="getPopupOpen('productSpec')"/>
                         </div>
-                    </swiper-slide>
+                    </div>
                 </swiper>
             </div>
             <div class="w-full pt-5 pl-5 bottom-swiper">
@@ -28,7 +28,7 @@
         @update:visible="getPopupClose('productSpec', true);">
         <template #header>
             <div class="inline-flex items-center justify-center gap-2">
-                <span class="text-2xl font-bold whitespace-nowrap ">{{ product['info']['itemNm'] }}</span>
+                <span class="text-2xl font-bold whitespace-nowrap ">{{ state['itemNm'] }}</span>
             </div>
         </template>
         <section>

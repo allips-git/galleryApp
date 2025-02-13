@@ -10,12 +10,12 @@
         <ul class="grid grid-cols-2 gap-x-4 ">
             <li class="flex flex-col gap-y-4">
                 <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in product['list1']" @get-whis="getWhis" :key="index" 
-                    @click="getMove(item['gkCd'], item['itemCd'])"/>
+                    @click="getMove(item['gkCd'], item['itemCd'], item['itemNm'])"/>
             </li>
 
             <li class="flex flex-col gap-y-4">
                 <ProductCard :aspectRatio="false" :item="item" v-for="(item, index) in product['list2']" @get-whis="getWhis" :key="index" 
-                    @click="getMove(item['gkCd'], item['itemCd'])"/>
+                    @click="getMove(item['gkCd'], item['itemCd'], item['itemNm'])"/>
             </li>
         </ul>
     </main>
@@ -35,9 +35,10 @@ const state     = useStateStore();
 const product   = useProductStore();
 const router    = useRouter();
 
-const getMove = async (gkCd: string, itemCd: string) => {
+const getMove = async (gkCd: string, itemCd: string, itemNm: string) => {
     await state.setGkCd(gkCd);
     await state.setItemCd(itemCd);
+    await state.setItemNm(itemNm);
     router.push('/product/detail');
 };
 

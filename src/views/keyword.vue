@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import CompanyCard from '@/components/card/CompanyCard.vue';
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router'; // useRouter 임포트
+import { useRouter } from 'vue-router';
 import { useStateStore, useKeywordStore } from '@/stores';
 
 const state     = useStateStore();
@@ -21,6 +21,7 @@ const keyword   = useKeywordStore();
 const getProduct = async (code: string, codeNm: string) => {
     await state.setCode(code);
     await state.setCodeNm(codeNm);
+    await state.setItemGb('');
     router.push('/product');
 };
 

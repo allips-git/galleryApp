@@ -74,6 +74,7 @@ export const useProductStore = defineStore('product', {
                 myCode  : loginStore['code'],
                 othCode : state['code'],
                 gkCd    : this.gkCd,
+                itemGb  : state['itemGb'],
                 search  : this.search,
                 start   : this.start,
                 limit   : this.limit

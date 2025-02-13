@@ -16,7 +16,7 @@ import newPost from "@/views/newPost.vue";
 import keyword from "@/views/keyword.vue";
 import product from "@/views/product/product.vue";
 import productDetail from "@/views/product/productDetail.vue";
-import { useStateStore, useProductStore } from '@/stores';
+import { useStateStore } from '@/stores';
 
 const routes = [
     {
@@ -86,7 +86,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const state     = useStateStore();
-    const product   = useProductStore();
 
     switch(to.name)
     {
@@ -94,7 +93,7 @@ router.beforeEach((to, from, next) => {
             to.meta.title = state['itemGbNm'];
         break;
         case 'productDetail':
-            to.meta.title = product['info']['itemNm'];
+            to.meta.title = state['itemNm'];
         break;
     }
 

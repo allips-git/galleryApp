@@ -1,14 +1,16 @@
 <template>
 <header class="sticky top-0 z-50 flex items-center justify-between flex-none w-full h-16 px-5 bg-white dark:bg-netblack dark:border-zinc-700">
-
-<div class="flex items-center flex-none gap-1">
-    <router-link class="" to="/"><p class="text-2xl font-bold whitespace-nowrap">{{ login['name'] }}</p></router-link>
-</div>
-    
-    
-    
+    <div class="flex items-center flex-none gap-1">
+        <router-link v-if="!search" class="" to="/"><p class="text-2xl font-bold whitespace-nowrap">{{ login['name'] }}</p></router-link>
+        <div v-if="search" class="flex gap-2 mb-3">
+            <IconField class="w-full">
+                <InputIcon class="pi pi-search" />
+                <InputText id="search" v-model="main.search" placeholder="제품 이름 검색" class="w-full" @keyup.enter="getList"/>
+            </IconField>
+        </div>
+    </div>
     <div class="flex items-center gap-3">
-        <button class="flex items-center justify-center size-8">
+        <button class="flex items-center justify-center size-8" @click="getSearch">
             <span class="pi pi-search !text-2xl"></span>
         </button>
 
@@ -31,14 +33,40 @@
 
 <script setup lang="ts">
 import IconAvatar from '@/components/icons/IconAvatar.vue'
+import InputText from 'primevue/inputtext';
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
 import Button from 'primevue/button';
 import Popover from 'primevue/popover';
-import { useRouter } from 'vue-router';
-import { ref, nextTick } from 'vue';
-import { useLoginStore } from '@/stores';
+import { useRouter, useRoute } from 'vue-router';
+import { ref, nextTick, watch } from 'vue';
+import { useLoginStore, useMainStore } from '@/stores';
 
 const router    = useRouter();
 const login     = useLoginStore();
+const main      = useMainStore();
+const search    = ref(false);
+const route     = useRoute();
+
+const getSearch = () => {
+    search.value = !search.value;
+    if (search.value) 
+    {
+        nextTick(() => {
+            const input = document.getElementById('search') as HTMLInputElement;
+            if (input) 
+            {
+                input.focus();
+            }
+        });
+    }
+}
+
+const getList = async () => {
+    await main.getSearchReset();
+    await main.getSearch();
+    router.push('/search');
+}
 
 const getLogOut = () => {
     alert('로그아웃 되었습니다.');
@@ -94,32 +122,11 @@ const items = ref([
     },
 ]);
 
-// const { t, locale } = useI18n();
-// const currentLanguage = ref(locale.value);
+watch(() => route.path, (newPath) => {
+    if(newPath !== '/' && newPath !== '/search')
+    {
+        search.value = false;
+    }
+}, { immediate: true });
 
-// const datePickerLocale = ref(datePickerLocales.ko); // 초기 로케일 설정
-
-// watch(locale, (newLocale) => {
-//     currentLanguage.value = newLocale === 'ko' ? 'KO' : 'EN';
-//     datePickerLocale.value = datePickerLocales[newLocale]; // 데이트 피커 로케일 업데이트
-//     localStorage.setItem('locale', newLocale); // 로컬 스토리지에 저장
-// });
-
-// const changeLanguage = (newLocale) => {
-//   locale.value = newLocale; // vue-i18n의 locale 변경
-//   localStorage.setItem('locale', newLocale); // 로컬 스토리지에 저장
-//   location.reload(); // 페이지 새로 고침
-// };
-
-
-// const toggle = (event) => {
-//     menu.value.toggle(event);
-// };
-
-// 컴포넌트가 마운트될 때 기본 로케일 설정
-// onMounted(() => {
-   
-//     datePickerLocale.value = datePickerLocales[locale.value]; // 초기 데이트 피커 로케일 설정
-// });
- </script>
-
+</script>

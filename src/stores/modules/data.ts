@@ -4,6 +4,7 @@ export const useDataStore = defineStore('data', {
     state: () => {
         return {
             keyword : [
+                { name  : '전체', value : '' },
                 { name  : '롤스크린', value : 'GK0001' },
                 { name  : '콤비 블라인드', value : 'GK0002' },
                 { name  : '트리플 쉐도우', value : 'GK0003' },

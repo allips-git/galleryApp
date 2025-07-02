@@ -28,14 +28,15 @@ interface Info {
 }
 
 interface State {
-    gkCd    : string;
-    search  : string;
-    list1   : List[];
-    list2   : List[];
-    more    : boolean;
-    info    : Info;
-    start   : number;
-    limit   : number;
+    gkCd        : string;
+    search      : string;
+    list1       : List[];
+    list2       : List[];
+    more        : boolean;
+    fileIndex   : number;
+    info        : Info;
+    start       : number;
+    limit       : number;
 }
 
 const getInfo = (): Info => {
@@ -56,14 +57,15 @@ const fileUrl = 'https://elasticbeanstalk-ap-northeast-2-627549176645.s3.ap-nort
 
 export const useProductStore = defineStore('product', {
     state: (): State => ({
-        gkCd    : '',
-        search  : '',
-        list1   : [],
-        list2   : [],
-        more    : true,
-        info    : getInfo(),
-        start   : 0,
-        limit   : 20
+        gkCd        : '',
+        search      : '',
+        list1       : [],
+        list2       : [],
+        more        : true,
+        fileIndex   : 0,
+        info        : getInfo(),
+        start       : 0,
+        limit       : 20
     }),
     actions: {
         async getList()
@@ -140,6 +142,8 @@ export const useProductStore = defineStore('product', {
                 const instance  = await getAxiosData();
                 const res       = await instance.post(`https://gallery-data.plansys.kr/keyword/getInfo`, params);
 
+                console.log(res);
+
                 const files     = [];
 
                 const info = {
@@ -150,14 +154,18 @@ export const useProductStore = defineStore('product', {
                     etc         : res.data['etc'],
                     origin      : res.data['origin'],
                     prodChar    : res.data['prodChar'],
-                    repImg      : fileUrl + res.data['repFile']['filePath']
+                    repImg      : fileUrl + (res.data['list'].length > 0 ? res.data['list'][0]['files'][0]['filePath'] : ''),
                 }
 
                 res.data['list'].map(item => {
-                    item.files.map(file => {
-                        files.push({
-                            icNm : item.icNm,
-                            file : fileUrl + file.filePath
+                    files.push({
+                        icNm    : item.icNm,
+                        repFile : fileUrl + item.files[0].filePath,
+                        files   : item.files.map(file => {
+                            return {
+                                fileNm  : file.fileNm,
+                                filePath: fileUrl + file.filePath
+                            }
                         })
                     })
                 });
@@ -165,8 +173,6 @@ export const useProductStore = defineStore('product', {
                 info['files'] = files;
 
                 this.info = info;
-
-                console.log(this.info);
             }
             catch(e)
             {
@@ -204,6 +210,10 @@ export const useProductStore = defineStore('product', {
 
                 return false;
             }
+        },
+        getFileIndex(index: number)
+        {
+            this.fileIndex = index;
         },
         getListReset()
         {

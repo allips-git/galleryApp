@@ -10,6 +10,7 @@ interface RouteMeta {
 
 import Login from "@/views/LoginPage.vue";
 import Index from "@/views/index.vue";
+import Search from "@/views/search.vue";
 import popular from "@/views/popular.vue";
 import whis from "@/views/whis.vue";
 import newPost from "@/views/newPost.vue";
@@ -31,7 +32,12 @@ const routes = [
         component: Index,
         meta: { showTopHeader: true, showAppFooter: true } as RouteMeta 
     },
-
+    {
+        path: "/search",
+        name: "Search",
+        component: Search,
+        meta: { showTopHeader: true, showAppFooter: true } as RouteMeta 
+    },
     {
         path: "/popular",
         name: "popular",
@@ -56,21 +62,21 @@ const routes = [
         path: "/keyword",
         name: "keyword",
         component: keyword,
-        meta: { showTopHeader: false, showAppFooter: false } as RouteMeta 
+        meta: { showTopHeader: false, showAppFooter: true } as RouteMeta 
     },
 
     {
         path: "/product",
         name: "product",
         component: product,
-        meta: { showTopHeader: false, showAppFooter: false, title: "제품선택" } as RouteMeta 
+        meta: { showTopHeader: false, showAppFooter: true, title: "제품선택" } as RouteMeta 
     },
 
     {
         path: "/product/detail",
         name: "productDetail",
         component: productDetail,
-        meta: { showTopHeader: false, showAppFooter: false, title: "세븐크리스 7종" } as RouteMeta 
+        meta: { showTopHeader: false, showAppFooter: true, title: "세븐크리스 7종" } as RouteMeta 
     }
 ]
 

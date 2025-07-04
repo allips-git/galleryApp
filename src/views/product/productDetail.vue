@@ -98,7 +98,7 @@ import 'swiper/swiper-bundle.css'
 import 'swiper/css/pagination'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Pagination } from 'swiper/modules'
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, onUnmounted, ref, computed } from 'vue'
 import type { Swiper as SwiperInstance } from 'swiper/types'
 import { useStateStore, usePopupStore, useProductStore } from '@/stores'
 import { usePopup } from '@/assets/js/popup'
@@ -141,8 +141,13 @@ const setActiveSlide = async (index: number) => {
 }
 
 onMounted(() => {
-  product.getInfo()
+  product.getInfo();
 })
+
+onUnmounted(() => {
+  product.getFileIndex(0);
+  mainSwiper.value = null;
+});
 </script>
 
 <style lang="scss">

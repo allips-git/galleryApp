@@ -9,6 +9,7 @@ interface RouteMeta {
 }
 
 import Login from "@/views/LoginPage.vue";
+import Privacy from "@/views/privacy.vue";
 import Index from "@/views/index.vue";
 import Search from "@/views/search.vue";
 import popular from "@/views/popular.vue";
@@ -31,6 +32,12 @@ const routes = [
         name: "MainPage",
         component: Index,
         meta: { showTopHeader: true, showAppFooter: true } as RouteMeta 
+    },
+    {
+        path: "/privacy",
+        name: "Privacy",
+        component: Privacy,
+        meta: { showTopHeader: false, showAppFooter: false } as RouteMeta 
     },
     {
         path: "/search",
